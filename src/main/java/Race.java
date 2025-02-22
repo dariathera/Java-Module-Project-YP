@@ -13,14 +13,27 @@ public class Race {
         for (int i = 1; i <= numberОfРarticipants; i++) {
             System.out.println(i + "-й участник:");
             String[] data = scanner.nextLine().split(",");
-            int velocity = Integer.parseInt(data[1].trim());
-            String name = data[0].trim();
-            if (velocity > 250 || velocity <= 0) {
-                System.out.println("Введено неправдоподобное значение скорости. Попробуйте снова.");
+            if (data.length != 2) {
+                System.out.println("Введите название и скорость через запятую. Пример:\nБугатти Вейрон, 220");
                 i--;
             }
             else {
-                raceРarticipants.add(new Car(data[0].trim(), velocity));
+                int velocity;
+
+                try {
+                    velocity = Integer.parseInt(data[1].trim());
+                    String name = data[0].trim();
+                    if (velocity > 250 || velocity <= 0) {
+                        System.out.println("Введено неправдоподобное значение скорости. Попробуйте снова.");
+                        i--;
+                    }
+                    else {
+                        raceРarticipants.add(new Car(data[0].trim(), velocity));
+                    }
+                } catch (java.lang.NumberFormatException e) {
+                    System.out.println("В качестве значения скорости введите целое число.");
+                    i--;
+                }
             }
         }
     }
